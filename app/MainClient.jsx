@@ -87,10 +87,10 @@ export default function MainClient({ initialData }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden min-h-[600px] flex flex-col">
       {/* Navigation */}
-      <div className="flex border-b border-slate-200 bg-slate-50/50">
+      <div className="flex overflow-x-auto border-b border-slate-200 bg-slate-50/50 no-scrollbar">
         <button
           onClick={() => setActiveTab('browse')}
-          className={`flex items-center px-6 py-4 text-sm font-medium transition-colors ${
+          className={`flex items-center px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
             activeTab === 'browse'
               ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/30'
               : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
@@ -101,7 +101,7 @@ export default function MainClient({ initialData }) {
         </button>
         <button
           onClick={() => setActiveTab('house')}
-          className={`flex items-center px-6 py-4 text-sm font-medium transition-colors ${
+          className={`flex items-center px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
             activeTab === 'house'
               ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/30'
               : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
@@ -118,14 +118,14 @@ export default function MainClient({ initialData }) {
       </div>
 
       {/* Main Content Area */}
-      <div className="p-6 flex-grow relative">
+      <div className="p-4 sm:p-6 flex-grow relative">
 
         {/* BROWSE TAB */}
         {activeTab === 'browse' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
-              <div className="relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 bg-slate-50 p-3 sm:p-4 rounded-lg border border-slate-100">
+              <div className="relative sm:col-span-2 md:col-span-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
@@ -166,7 +166,7 @@ export default function MainClient({ initialData }) {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
               {filteredPokemon.length === 0 ? (
                 <div className="col-span-full py-12 text-center text-slate-500">
                   No Pokémon found matching your filters.
@@ -180,19 +180,21 @@ export default function MainClient({ initialData }) {
                   >
                     <div className={`w-full h-2 ${habitatColors[pokemon.idealHabitat] || habitatColors.default}`} />
                     <div className="p-4 w-full flex flex-col items-center gap-2">
-                      <div className="w-16 h-16 relative bg-slate-50 rounded-full flex items-center justify-center border border-slate-100 group-hover:bg-slate-100 transition-colors">
-                        <Image width={64} height={64}
-                          src={getSpriteUrl(pokemon.number)}
-                          alt={pokemon.name}
-                          className="w-16 h-16 object-contain pixelated"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="text-center w-full">
-                        <div className="text-xs text-slate-400 font-mono">{pokemon.number}</div>
-                        <div className="font-semibold text-slate-800 truncate" title={pokemon.name}>{pokemon.name}</div>
-                        <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-1">
-                          <span className="block">{pokemon.idealHabitat} &bull; {pokemon.primaryLocation}</span>
+                      <div className="flex sm:flex-col items-center gap-4 sm:gap-2 w-full">
+                        <div className="w-16 h-16 relative bg-slate-50 rounded-full flex items-center justify-center border border-slate-100 group-hover:bg-slate-100 transition-colors flex-shrink-0">
+                          <Image width={64} height={64}
+                            src={getSpriteUrl(pokemon.number)}
+                            alt={pokemon.name}
+                            className="w-16 h-16 object-contain pixelated"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="text-left sm:text-center w-full overflow-hidden">
+                          <div className="text-xs text-slate-400 font-mono">{pokemon.number}</div>
+                          <div className="font-semibold text-slate-800 truncate" title={pokemon.name}>{pokemon.name}</div>
+                          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-1 truncate">
+                            <span>{pokemon.idealHabitat} &bull; {pokemon.primaryLocation}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -205,26 +207,26 @@ export default function MainClient({ initialData }) {
 
         {/* HOUSE BUILDER TAB */}
         {activeTab === 'house' && (
-          <div className="space-y-8 pb-16">
+          <div className="space-y-6 sm:space-y-8 pb-16 sm:pb-20">
             {compatibilityIssue && (
-              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+              <div className="flex items-start gap-3 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
                 <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-semibold">Compatibility Warning</h3>
-                  <p className="text-sm mt-1">{compatibilityIssue}</p>
+                  <h3 className="font-semibold text-sm sm:text-base">Compatibility Warning</h3>
+                  <p className="text-xs sm:text-sm mt-1">{compatibilityIssue}</p>
                 </div>
               </div>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
               {/* Left Column: Residents */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-slate-800">Current Residents ({houseResidents.length}/4)</h2>
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-800">Current Residents ({houseResidents.length}/4)</h2>
                   {houseResidents.length < 4 && (
                     <button
                       onClick={() => setActiveTab('browse')}
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                      className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 self-start sm:self-auto"
                     >
                       <Plus className="w-4 h-4" /> Add Pokémon
                     </button>
@@ -232,10 +234,10 @@ export default function MainClient({ initialData }) {
                 </div>
 
                 {houseResidents.length === 0 ? (
-                  <div className="p-12 border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center text-center bg-slate-50/50">
-                    <Home className="w-12 h-12 text-slate-300 mb-4" />
-                    <h3 className="font-medium text-slate-900 mb-1">No residents yet</h3>
-                    <p className="text-sm text-slate-500 max-w-sm mb-6">
+                  <div className="p-8 sm:p-12 border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center text-center bg-slate-50/50">
+                    <Home className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mb-3 sm:mb-4" />
+                    <h3 className="font-medium text-slate-900 mb-1 text-sm sm:text-base">No residents yet</h3>
+                    <p className="text-xs sm:text-sm text-slate-500 max-w-sm mb-5 sm:mb-6">
                       Go to the Pokémon Browser to find and add Pokémon to your house plan.
                     </p>
                     <button
@@ -246,7 +248,7 @@ export default function MainClient({ initialData }) {
                     </button>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {houseResidents.map((pokemon) => (
                       <div key={pokemon.number} className="relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
                         <button
@@ -352,12 +354,12 @@ export default function MainClient({ initialData }) {
             </div>
 
             {/* Sticky Rules Reminder */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] z-20">
-              <div className="max-w-7xl mx-auto px-4 flex flex-wrap gap-4 md:gap-8 justify-center items-center text-sm text-slate-600 font-medium">
-                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-slate-400" /> Max 4 Pokémon</span>
-                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-slate-400" /> All Habitats Must Match</span>
-                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-slate-400" /> 10×10 Block Limit</span>
-                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-slate-400" /> Min 3 Unique Furniture Items</span>
+            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-3 sm:p-4 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] z-20">
+              <div className="max-w-7xl mx-auto px-2 flex flex-wrap gap-x-4 gap-y-2 md:gap-8 justify-center items-center text-xs sm:text-sm text-slate-600 font-medium text-center">
+                <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-400" /> Max 4 Pokémon</span>
+                <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-400" /> All Habitats Must Match</span>
+                <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-400" /> 10×10 Block Limit</span>
+                <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-400" /> Min 3 Unique Furniture Items</span>
               </div>
             </div>
           </div>
@@ -375,16 +377,16 @@ export default function MainClient({ initialData }) {
           >
             {/* Modal Header */}
             <div className={`h-3 w-full ${habitatColors[selectedPokemon.idealHabitat] || habitatColors.default}`} />
-            <div className="flex justify-between items-start p-6 pb-4">
-              <div className="flex gap-5 items-start">
+            <div className="flex justify-between items-start p-4 sm:p-6 pb-4">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
                 <Image width={64} height={64}
                   src={getSpriteUrl(selectedPokemon.number)}
                   alt={selectedPokemon.name}
-                  className="w-24 h-24 object-contain pixelated bg-slate-50 rounded-xl border border-slate-100"
+                  className="w-20 h-20 sm:w-24 sm:h-24 object-contain pixelated bg-slate-50 rounded-xl border border-slate-100"
                 />
                 <div>
                   <div className="text-sm text-slate-400 font-mono mb-1">{selectedPokemon.number}</div>
-                  <h2 className="text-3xl font-bold text-slate-900 leading-none mb-2">{selectedPokemon.name}</h2>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-none mb-2">{selectedPokemon.name}</h2>
                   <div className="flex flex-wrap gap-2">
                     <span className="inline-flex items-center px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-700">
                       {selectedPokemon.idealHabitat}
@@ -397,14 +399,14 @@ export default function MainClient({ initialData }) {
               </div>
               <button
                 onClick={() => setSelectedPokemon(null)}
-                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2 -mr-2 -mt-2 sm:mr-0 sm:mt-0 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors flex-shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 pt-2 space-y-6">
+            <div className="p-4 sm:p-6 pt-2 space-y-6">
 
               {/* Info Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -473,7 +475,7 @@ export default function MainClient({ initialData }) {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+            <div className="p-4 sm:p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
               <button
                 onClick={() => addToHouse(selectedPokemon)}
                 className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
